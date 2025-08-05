@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: linear-gradient(to right, #667eea, #764ba2);
+        }
+        h1{
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 270px;
+            margin-bottom: 40px;
+        }
+        .buttons{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .user-btn, .admin-btn{
+            margin: 0 20px;
+            padding: 10px 30px;
+            background-color: blue;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .admin-btn a{
+            text-decoration: none;
+            color: white;
+        }
+        .user-btn:hover, .admin-btn:hover{
+            background: darkblue;
+            color: white;
+        }
+        .user-btn a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+    <h1>ARE YOU A USER OR ADMIN?</h1>
+    <div class="buttons">
+    <div class="user-btn"><a href="signup.html">USER</a></div>
+    <div class="admin-btn"><a href="adminlogin.html">ADMIN</a></div>
+    </div>
+    </div>
+</body>
+</html>

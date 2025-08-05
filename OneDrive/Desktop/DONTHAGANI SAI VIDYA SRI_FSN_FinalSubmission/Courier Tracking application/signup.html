@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="signup.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-card">
+            <div class="form-close" onclick="closeForm()">&times;</div>
+            <div class="form-header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-box"></i>CourierTrack
+                </div>
+                <h1>Create Account</h1>
+                <p>Sign up to start tracking your packages</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Create a password" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                </div>
+
+                <div id="errorMessage" class="error-message hidden"></div>
+                <div id="successMessage" class="success-message hidden"></div>
+
+                <button type="submit" class="btn btn-primary form-submit" onclick="signupNavigate()" id="registerBtn">
+                    <span id="registerText">Create Account</span>
+                    <span id="registerSpinner" class="loading hidden"></span>
+                </button>
+            </form>
+
+            <div class="form-footer">
+                <p>Already have an account? <a href="login.html">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="signupscript.js"></script>
+
+</body>
+</html>

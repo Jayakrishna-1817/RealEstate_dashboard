@@ -1,0 +1,337 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding:10px;
+    background-color: white;
+    max-height:300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.logo{
+    display: flex;
+    flex-direction: row;
+}
+.logo-box{
+    height:40px;
+    width:40px;
+    border-radius: 8px;
+    background-color: blue;
+    display: flex;
+    flex-direction: row;
+    margin-left: 50px;
+}
+.logo-box i{
+    color: rgb(243, 212, 154);
+    font-size: 30px;
+    line-height: 40px;
+    margin-left: 6px;
+    margin-right: 20px;
+}
+.logo-box{
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 40px;
+    color: blue;
+}
+nav ul{
+    display: flex;
+    flex-direction: row;
+    gap:50px;
+    margin-left: 700px;
+    font-weight: bold;
+    color: blue;
+    font-size: 18px;
+    margin-top: 15px;
+}
+.header-buttons a {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-left: 450px;
+  background-color: #007bff;  
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  min-width: 140px;
+  text-align: center;
+}
+
+
+.header-buttons a.signup-btn {
+  background-color: #dc3545; 
+  margin-right: -100px; 
+}
+.header-buttons a.dashboard-btn {
+    margin-left: 600px;
+    margin-right: -420px;
+}
+
+.header-buttons a:hover {
+  background-color: #0056b3;  
+  transform: scale(1.05);     
+}
+
+.header-buttons a.signup-btn:hover {
+  background-color: #c82333;  
+}
+.content1 {
+  padding: 40px 60px;
+  background-color: #ffffff;
+  color: #1c1f23;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1c1f23; 
+  margin-bottom: 10px;
+  margin-top: 100px;
+  margin-left: 100px;
+}
+
+.subheading {
+  font-size: 1.1rem;
+  color: #6c757d; 
+  font-weight: 400;
+  margin-left: 100px;
+}
+.content2{
+    display:flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    width: 100vw;
+}
+
+.shipment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.shipment {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  padding: 30px 40px;
+  width: 1200px;
+  max-width: none;
+}
+
+.ship-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 20px;
+}
+
+.ship-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1c1f23;
+}
+
+.add-shipment-btn {
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  color: white;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.add-shipment-btn a{
+      text-decoration: none;
+      color: white;
+}
+
+.add-shipment-btn:hover {
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+}
+
+.shipment-content {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.shipment-content .icon {
+  font-size: 48px;
+  color: rgb(237, 197, 121);
+  margin-bottom: 20px;
+}
+
+.shipment-content .line1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 10px;
+}
+
+.shipment-content .line2 {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.create-shipment-btn {
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+.create-shipment-btn a{
+      text-decoration: none;
+      color: white;
+}
+.create-shipment-btn:hover {
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+}
+.shipment-cards {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.status-pill {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-weight: 500;
+}
+
+.shipment-actions {
+    margin-top: 10px;
+}
+
+.edit-btn {
+    border: 1px solid #007bff;
+    color: #007bff;
+    background: #fff;
+    padding: 6px 12px;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.edit-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.shipment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.shipment-table th, .shipment-table td {
+    padding: 12px 30px;
+    text-align: left;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    background-color: #fff3cd;
+    color: #856404;
+    font-weight: bold;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #f9f9f9;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #f5e1a4;
+    color: #333;
+}
+
+.status-in-transit {
+    background-color: #f5e1a4;
+}
+
+.status-delivered {
+    background-color: #d1f7c4;
+}
+.profile.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: blue; 
+  font-size: 25px;
+  margin-right: 100px;
+  margin-top: 10px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: #fff;
+  min-width: 150px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.dropdown-content a {
+  display: block;
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background: #eee;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+

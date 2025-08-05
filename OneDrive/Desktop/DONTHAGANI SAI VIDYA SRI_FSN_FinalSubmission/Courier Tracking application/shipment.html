@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="shipmentstyles.css">
+</head>
+<body>
+    <div class="container">
+        <div class = "header">
+            <div class="logo">
+                <div class="logo-box">
+                    <i class="fa-solid fa-box"></i>CourierTrack
+                </div>
+            </div>
+            <div class="header-buttons">
+                <a href="dashboard.html" class="dashboard-btn">Dashboard</a> 
+                <a href="index.html" class="signup-btn">Logout</a>
+            </div>
+            <div class="profile dropdown">
+            <button onclick="toggleProfile()" class="dropbtn">
+                <i class="fa-solid fa-user"></i>
+            </button>
+            <div id="profileDropdown" class="dropdown-content">
+                <a href="#">Profile</a>
+                <a href="#">Settings</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="heading">Courier Management</div>
+            <div class="subheading">
+             Manage all your shipments and update their progress
+            </div>
+        </div>
+        <div class="main">
+        <div class="content2">
+            <div class="shipment-container">
+                <div class="shipment">
+                <div class="ship-header">
+                    <h2>All Shipments</h2>
+                    <div class="add-shipment-btn"><a href="shipmentform.html">+Add Shipment</a></div>
+                </div>
+                <div class="shipment-content">
+                    <div class="icon"><i class="fa-solid fa-box"></i></div>
+                    <div class="line1">No shipments found</div>
+                    <div class="line2">Create your first shipment to get started</div>
+                    <div class="create-shipment-btn"><a href="shipmentform.html">Create Shipment</a></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="shipment-cards" id="shipmentCardsContainer" style="display: none;"></div>
+    </div>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const container = document.querySelector(".shipment-content");
+  let shipments = [];
+
+  try {
+    const res = await fetch("/api/shipments");
+    shipments = await res.json();
+  } catch (err) {
+    console.error("GET error:", err);
+    shipments = JSON.parse(localStorage.getItem("shipments")) || [];
+  }
+
+  localStorage.setItem("shipments", JSON.stringify(shipments));
+
+  if (shipments.length === 0) return;
+
+  container.innerHTML = `
+    <table class="shipment-table">
+      <thead><tr>
+        <th>Tracking #</th><th>Sender</th><th>Recipient</th>
+        <th>Status</th><th>Location</th><th>Est. Delivery</th><th>Actions</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>`;
+  
+  const tbody = container.querySelector("tbody");
+  shipments.forEach(s => {
+    tbody.insertAdjacentHTML("beforeend", `
+      <tr>
+        <td><strong>${s.trackingNumber}</strong></td>
+        <td>${s.sender}</td>
+        <td>${s.recipient}</td>
+        <td><span class="status-badge">${s.status}</span></td>
+        <td>${s.currentLocation}</td>
+        <td>${s.estimatedDelivery}</td>
+        <td>
+          <button class="edit-btn" data-id="${s.id}">Edit</button>
+          <button class="delete-btn" data-id="${s.id}">Delete</button>
+        </td>
+      </tr>`);
+  });
+
+  tbody.addEventListener("click", async (e) => {
+    const id = e.target.getAttribute("data-id");
+    if (!id) return;
+
+    if (e.target.classList.contains("delete-btn")) {
+      const shipment = shipments.find(s => s.id == id);
+      const confirmed = confirm(`Are you sure you want to delete the shipment with tracking number (${shipment.trackingNumber})?`);
+      if (!confirmed) return;
+      
+      try {
+        await fetch(`/api/shipments/${id}`, { method: "DELETE" });
+        e.target.closest("tr").remove();
+        // Update localStorage
+        const updatedShipments = shipments.filter(s => s.id != id);
+        localStorage.setItem("shipments", JSON.stringify(updatedShipments));
+      } catch (err) {
+        console.error("Delete error:", err);
+      }
+    }
+
+
+    if (e.target.matches(".edit-btn")) {
+      const shipment = shipments.find(s => s.id == id);
+      localStorage.setItem("editShipment", JSON.stringify(shipment));
+      window.location.href = "shipmentform.html?edit=true";
+    }
+  });
+});
+function toggleProfile() {
+  document.getElementById("profileDropdown").classList.toggle("show");
+}
+
+window.addEventListener("click", function (e) {
+  const dropdown = document.getElementById("profileDropdown");
+  const btn = document.querySelector(".dropbtn");
+  if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.classList.remove("show");
+  }
+});
+
+function logout() {
+  localStorage.removeItem("currentUser");
+  window.location.href = "login.html";
+}
+</script>
+
+
+</body>
+</html>

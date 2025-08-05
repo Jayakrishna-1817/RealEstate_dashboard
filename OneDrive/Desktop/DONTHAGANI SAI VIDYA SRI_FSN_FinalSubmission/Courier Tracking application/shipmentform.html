@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="shipmentformstyles.css">
+</head>
+<body>
+  <div class="form-wrapper">
+    <div class="form-box">
+        <button class="close-btn" onclick="closeForm()">×</button>
+      <div class="form-header">
+        <h3>Add New Shipment</h3>
+      </div>
+      <form id="shipmentForm">
+        <input type="hidden" id="shipmentId" />
+        <div class="form-group">
+          <label for="trackingNumber">Tracking Number</label>
+          <input type="text" id="trackingNumber" class="form-input" placeholder="Enter tracking number" required />
+        </div>
+        <div class="form-group">
+          <label for="sender">Sender</label>
+          <input type="text" id="sender" class="form-input" placeholder="Enter sender name" required />
+        </div>
+        <div class="form-group">
+          <label for="recipient">Recipient</label>
+          <input type="text" id="recipient" class="form-input" placeholder="Enter recipient name" required />
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" class="form-input" required>
+            <option value="">Select status</option>
+            <option value="Pending">Pending</option>
+            <option value="In Transit">In Transit</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="currentLocation">Current Location</label>
+          <input type="text" id="currentLocation" class="form-input" placeholder="Enter current location" required />
+        </div>
+        <div class="form-group">
+          <label for="estimatedDelivery">Estimated Delivery Date</label>
+          <input type="date" id="estimatedDelivery" class="form-input" required />
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeForm()">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+                <span id="submitText">Add Shipment</span>
+            </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("shipmentForm");
+  const submitText = document.getElementById("submitText");
+  const shipmentIdInput = document.getElementById("shipmentId");
+  const params = new URLSearchParams(window.location.search);
+  const isEdit = params.get("edit") === "true";
+
+  if (isEdit) {
+    const shipment = JSON.parse(localStorage.getItem("editShipment"));
+    if (shipment && shipment.id != null) {
+      submitText.textContent = "Update";
+      shipmentIdInput.value = shipment.id;
+      form.trackingNumber.value = shipment.trackingNumber;
+      form.sender.value = shipment.sender;
+      form.recipient.value = shipment.recipient;
+      form.status.value = shipment.status;
+      form.currentLocation.value = shipment.currentLocation;
+      form.estimatedDelivery.value = shipment.estimatedDelivery;
+    }
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const shipment = {
+      trackingNumber: form.trackingNumber.value,
+      sender: form.sender.value,
+      recipient: form.recipient.value,
+      status: form.status.value,
+      currentLocation: form.currentLocation.value,
+      estimatedDelivery: form.estimatedDelivery.value
+    };
+
+    const id = shipmentIdInput.value;
+    const method = id ? "PUT" : "POST";
+    const url = id
+      ? `/api/shipments/${id}`
+      : "/api/shipments";
+
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(shipment)
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      window.location.href = "shipment.html";
+    } catch (err) {
+      console.error(`${method} failed:`, err);
+      alert("Failed to save. Check console.");
+    }
+    alert(`Shipment with tracking number (${shipment.trackingNumber}) was successfully ${id ? 'updated' : 'added'}.`);
+    window.location.href = "shipment.html";
+
+  });
+});
+  function closeForm() {
+    window.location.href = "shipment.html";
+  }
+</script>
+
+
+
+</body>
+</html>

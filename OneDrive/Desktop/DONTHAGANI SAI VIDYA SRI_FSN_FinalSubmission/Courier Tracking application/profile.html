@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    <link rel="stylesheet" href="profile-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+        <div class = "header">
+            <div class="logo">
+                <div class="logo-box">
+                    <i class="fa-solid fa-box"></i>CourierTrack
+                </div>
+            </div>
+            <div class="header-buttons">
+                <a href="index.html" class="signup-btn">Logout</a>
+            </div>
+
+            <div class="profile dropdown">
+            <button onclick="toggleProfile()" class="dropbtn">
+                <i class="fa-solid fa-user"></i>
+            </button>
+            <div id="profileDropdown" class="dropdown-content">
+                <a href="profile.html">Profile</a>
+                <a href="profile.html#accountSettings" onclick="toggleProfile()">Settings</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+            </div>
+
+        </div>   
+    <div class="profile-container">
+        <div class="profile-picture-container">
+            <img src="profile.jpeg" alt="Profile Picture" id="profilePicture">
+            <input type="file" id="profilePictureInput" accept="image/*" class="visually-hidden">
+            <h2>Change your Profile Picture</h2>
+        </div>
+
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="personalInfo">Personal Information</button>
+            <button class="tab-button" data-tab="accountSettings">Account Settings</button>        </div>
+
+        <div id="personalInfo" class="tab-content active">
+        <div class="personal-header">
+            <h3>Personal Details</h3>
+            <button id="editProfileBtn" class="edit-btn">Edit</button>
+        </div>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location">
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
+        <div id="accountSettings" class="tab-content">
+            <h3>Password Settings</h3>
+            <button id="showPasswordResetBtn">Change Password</button>
+            <form id="passwordResetForm" class="hidden">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password:</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirm New Password:</label>
+                    <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+                </div>
+                <button type="submit">Update Password</button>
+                <button type="button" id="cancelPasswordResetBtn">Cancel</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="profile-script.js"></script>
+</body>
+</html>
+
