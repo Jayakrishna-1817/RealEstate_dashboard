@@ -1,0 +1,249 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+/* FocusFlow Design System - Warm, Calming Writing Sanctuary */
+
+@layer base {
+  :root {
+    /* Warm paper-like backgrounds */
+    --background: 40 33% 97%;
+    --foreground: 30 10% 15%;
+
+    /* Card surfaces - slightly warmer than background */
+    --card: 40 40% 98%;
+    --card-foreground: 30 10% 15%;
+
+    --popover: 40 40% 98%;
+    --popover-foreground: 30 10% 15%;
+
+    /* Primary - Warm amber/copper (filter coffee inspiration) */
+    --primary: 25 70% 45%;
+    --primary-foreground: 40 33% 98%;
+
+    /* Secondary - Soft sage green (calming, natural) */
+    --secondary: 140 20% 92%;
+    --secondary-foreground: 140 25% 25%;
+
+    /* Muted - Warm gray tones */
+    --muted: 35 15% 92%;
+    --muted-foreground: 30 10% 45%;
+
+    /* Accent - Gentle terracotta warmth */
+    --accent: 20 60% 94%;
+    --accent-foreground: 20 70% 35%;
+
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 35 20% 88%;
+    --input: 35 20% 88%;
+    --ring: 25 70% 45%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens for FocusFlow */
+    --paper: 40 35% 96%;
+    --ink: 30 15% 20%;
+    --coffee: 25 70% 45%;
+    --coffee-light: 25 60% 92%;
+    --sage: 140 20% 88%;
+    --sage-dark: 140 25% 35%;
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(30 20% 20% / 0.08);
+    --shadow-hover: 0 8px 30px -8px hsl(30 20% 20% / 0.12);
+    --shadow-card: 0 2px 12px -2px hsl(30 20% 20% / 0.06);
+
+    /* Sidebar */
+    --sidebar-background: 40 30% 95%;
+    --sidebar-foreground: 30 10% 25%;
+    --sidebar-primary: 25 70% 45%;
+    --sidebar-primary-foreground: 40 33% 98%;
+    --sidebar-accent: 35 25% 90%;
+    --sidebar-accent-foreground: 30 10% 25%;
+    --sidebar-border: 35 20% 88%;
+    --sidebar-ring: 25 70% 50%;
+  }
+
+  .dark {
+    --background: 30 15% 8%;
+    --foreground: 40 20% 92%;
+
+    --card: 30 12% 10%;
+    --card-foreground: 40 20% 92%;
+
+    --popover: 30 12% 10%;
+    --popover-foreground: 40 20% 92%;
+
+    --primary: 30 65% 55%;
+    --primary-foreground: 30 10% 8%;
+
+    --secondary: 140 15% 18%;
+    --secondary-foreground: 140 20% 85%;
+
+    --muted: 30 10% 18%;
+    --muted-foreground: 35 15% 60%;
+
+    --accent: 25 30% 18%;
+    --accent-foreground: 25 50% 80%;
+
+    --destructive: 0 55% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 10% 18%;
+    --input: 30 10% 18%;
+    --ring: 30 65% 55%;
+
+    --paper: 30 12% 10%;
+    --ink: 40 15% 88%;
+    --coffee: 30 65% 55%;
+    --coffee-light: 30 30% 18%;
+    --sage: 140 15% 18%;
+    --sage-dark: 140 20% 75%;
+
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+    --shadow-hover: 0 8px 30px -8px hsl(0 0% 0% / 0.4);
+    --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.2);
+
+    --sidebar-background: 30 12% 10%;
+    --sidebar-foreground: 40 20% 90%;
+    --sidebar-primary: 30 65% 55%;
+    --sidebar-primary-foreground: 30 10% 8%;
+    --sidebar-accent: 30 10% 15%;
+    --sidebar-accent-foreground: 40 20% 90%;
+    --sidebar-border: 30 10% 18%;
+    --sidebar-ring: 30 65% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Writing typography */
+  .font-writing {
+    font-family: 'Crimson Pro', Georgia, serif;
+  }
+
+  .font-ui {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Smooth page transitions */
+  .page-transition {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  /* Paper-like card surfaces */
+  .paper-surface {
+    @apply bg-card rounded-xl;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Focus ring for accessibility */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  /* Elegant text selection */
+  ::selection {
+    background: hsl(var(--coffee) / 0.2);
+    color: hsl(var(--ink));
+  }
+
+  /* Writing area styling */
+  .writing-area {
+    @apply font-writing text-lg leading-relaxed tracking-wide;
+    color: hsl(var(--ink));
+  }
+
+  .writing-area::placeholder {
+    color: hsl(var(--muted-foreground));
+    font-style: italic;
+  }
+
+  /* Animated gradient background */
+  .gradient-warmth {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)) 0%,
+      hsl(var(--coffee-light)) 50%,
+      hsl(var(--sage) / 0.5) 100%
+    );
+  }
+
+  /* Subtle breathing animation */
+  @keyframes breathe {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  .animate-breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  /* Fade in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in-delay-1 {
+    animation: fadeIn 0.6s ease-out 0.1s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-2 {
+    animation: fadeIn 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+
+  .animate-fade-in-delay-3 {
+    animation: fadeIn 0.6s ease-out 0.3s forwards;
+    opacity: 0;
+  }
+
+  /* Glow effect on focus */
+  @keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 0 0 hsl(var(--coffee) / 0); }
+    50% { box-shadow: 0 0 20px 4px hsl(var(--coffee) / 0.15); }
+  }
+
+  .glow-on-focus:focus-within {
+    animation: glowPulse 2s ease-in-out infinite;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
