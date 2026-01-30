@@ -9,46 +9,49 @@ function Newsletter() {
   };
 
   const handleSubscribe = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!email) {
-    alert("Please enter your email");
-    return;
-  }
-
-  try {
-    const response = await fetch(
-      "https://real-estate-backend-y094.onrender.com/api/newsletter",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Request failed");
+    if (!email) {
+      alert("Please enter your email");
+      return;
     }
 
-    const text = await response.text();
+    try {
+      const response = await fetch(
+        "https://real-estate-backend-y094.onrender.com/api/newsletter",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
-    alert("Subscribed successfully!");
-    setEmail("");
-  } catch (error) {
-    console.error(error);
-    alert("Subscription failed");
-  }
-};
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
 
+      await response.text(); // safe even if empty
+
+      alert("Subscribed successfully!");
+      setEmail("");
+    } catch (error) {
+      console.error(error);
+      alert("Subscription failed");
+    }
+  };
 
   return (
     <section className="newsletter section" style={newsletterStyle}>
       <div className="newsletter-overlay"></div>
       <div className="container newsletter-container">
-        <h2>Learn more about our listing process, as well as our additional staging and design work.</h2>
-        <form onSubmit={handleSubmit} className="newsletter-form">
+        <h2>
+          Learn more about our listing process, as well as our additional staging and design work.
+        </h2>
+
+        {/* ✅ FIXED HERE */}
+        <form onSubmit={handleSubscribe} className="newsletter-form">
           <input
             type="email"
             placeholder="Enter Email Address"
@@ -56,7 +59,9 @@ function Newsletter() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <button type="submit" className="btn-subscribe-footer">Subscribe</button>
+          <button type="submit" className="btn-subscribe-footer">
+            Subscribe
+          </button>
         </form>
       </div>
     </section>
@@ -64,3 +69,4 @@ function Newsletter() {
 }
 
 export default Newsletter;
+
