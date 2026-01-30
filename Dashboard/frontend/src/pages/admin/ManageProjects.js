@@ -16,7 +16,6 @@ function ManageProjects() {
     fetchProjects();
   }, []);
 
-  // ✅ FIXED: correct backend URL + safe JSON handling
   const fetchProjects = async () => {
     try {
       const response = await fetch(`${BASE_URL}/api/projects`);
@@ -48,7 +47,6 @@ function ManageProjects() {
     setImagePreview(URL.createObjectURL(croppedBlob));
   };
 
-  // ✅ FIXED: POST uses BASE_URL
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,7 +82,6 @@ function ManageProjects() {
     }
   };
 
-  // ✅ FIXED: DELETE uses BASE_URL
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this project?")) return;
 
