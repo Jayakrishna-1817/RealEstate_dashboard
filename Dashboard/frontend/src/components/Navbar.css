@@ -1,0 +1,107 @@
+.navbar {
+  background: var(--primary-blue);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px 0 10px;
+  gap: 30px;
+}
+
+.navbar-logo img {
+  height: 40px;
+  filter: brightness(0) invert(1);
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: 35px;
+  margin-right: auto;
+}
+
+.navbar-menu li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: color 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-menu li a:hover {
+  color: var(--primary-orange);
+}
+
+.navbar-subscribe {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-subscribe input {
+  padding: 10px 15px;
+  border: 2px solid white;
+  border-radius: 5px;
+  background: transparent;
+  color: white;
+  outline: none;
+  font-size: 14px;
+  width: 220px;
+}
+
+.navbar-subscribe input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-subscribe {
+  background: white;
+  color: var(--primary-blue);
+  border: none;
+  padding: 10px 25px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-subscribe:hover {
+  background: var(--primary-orange);
+  color: white;
+}
+
+.btn-admin {
+  background: var(--primary-orange);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 5px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 15px;
+}
+
+.btn-admin:hover {
+  background: white;
+  color: var(--primary-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .navbar-menu,
+  .navbar-subscribe {
+    display: none;
+  }
+}

@@ -1,0 +1,78 @@
+.image-cropper {
+  margin-bottom: 20px;
+}
+
+.file-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px dashed #e2e8f0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.file-input:hover {
+  border-color: var(--primary-blue);
+}
+
+.help-text {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: 5px;
+}
+
+.crop-container {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f7fafc;
+  border-radius: 10px;
+}
+
+.crop-container .ReactCrop {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.crop-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btn-secondary {
+  background: #718096;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #4a5568;
+}
+
+.image-preview {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f7fafc;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.image-preview img {
+  max-width: 450px;
+  max-height: 350px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-dark);
+  font-weight: 500;
+}
