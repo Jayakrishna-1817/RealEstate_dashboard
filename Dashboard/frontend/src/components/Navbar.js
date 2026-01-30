@@ -13,7 +13,7 @@ function Navbar() {
     }
 
     try {
-      const response = await fetch('/api/newsletter', {
+      const response = await fetch('https://real-estate-backend-y094.onrender.com/api/newsletter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
