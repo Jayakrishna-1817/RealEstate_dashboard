@@ -6,34 +6,43 @@ function Navbar() {
   const [email, setEmail] = useState('');
 
   const handleSubscribe = async (e) => {
-    e.preventDefault();
-    if (!email) {
-      alert('Please enter your email');
-      return;
+  e.preventDefault();
+
+  if (!email) {
+    alert("Please enter your email");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "https://real-estate-backend-y094.onrender.com/api/newsletter",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Subscription failed");
     }
 
-    try {
-      const response = await fetch('https://real-estate-backend-y094.onrender.com/api/newsletter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email })
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        alert('Subscribed successfully!');
-        setEmail('');
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to subscribe');
+    let data = {};
+    const text = await response.text();
+    if (text) {
+      data = JSON.parse(text);
     }
-  };
+
+    alert("Subscribed successfully!");
+    setEmail("");
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to subscribe. Please try again.");
+  }
+};
+
 
   return (
     <nav className="navbar">
