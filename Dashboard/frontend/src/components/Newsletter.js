@@ -50,7 +50,6 @@ function Newsletter() {
           Learn more about our listing process, as well as our additional staging and design work.
         </h2>
 
-        {/* ✅ FIXED HERE */}
         <form onSubmit={handleSubscribe} className="newsletter-form">
           <input
             type="email"
