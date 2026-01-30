@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { BASE_URL } from "../../config";
 
 function ViewSubscriptions() {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -9,39 +10,39 @@ function ViewSubscriptions() {
 
   const fetchSubscriptions = async () => {
     try {
-      const response = await fetch('/api/newsletter');
+      const response = await fetch(`${BASE_URL}/api/newsletter`);
+      if (!response.ok) throw new Error();
       const data = await response.json();
       setSubscriptions(data);
-    } catch (error) {
-      console.error('Error fetching subscriptions:', error);
+    } catch {
+      setSubscriptions([]);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this subscription?')) {
-      try {
-        const response = await fetch(`/api/newsletter/${id}`, {
-          method: 'DELETE'
-        });
+    if (!window.confirm("Are you sure you want to delete this subscription?")) return;
 
-        if (response.ok) {
-          alert('Subscription deleted successfully!');
-          fetchSubscriptions();
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to delete subscription');
-      }
+    try {
+      const response = await fetch(`${BASE_URL}/api/newsletter/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error();
+
+      alert("Subscription deleted successfully!");
+      fetchSubscriptions();
+    } catch {
+      alert("Failed to delete subscription");
     }
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -80,8 +81,9 @@ function ViewSubscriptions() {
               ))}
             </tbody>
           </table>
+
           {subscriptions.length === 0 && (
-            <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-light)' }}>
+            <p style={{ textAlign: "center", padding: "20px", color: "var(--text-light)" }}>
               No subscriptions yet.
             </p>
           )}
