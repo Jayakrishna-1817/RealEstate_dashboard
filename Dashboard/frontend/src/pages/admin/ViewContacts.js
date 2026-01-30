@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { BASE_URL } from "../../config";
 
 function ViewContacts() {
   const [contacts, setContacts] = useState([]);
@@ -9,39 +10,39 @@ function ViewContacts() {
 
   const fetchContacts = async () => {
     try {
-      const response = await fetch('/api/contacts');
+      const response = await fetch(`${BASE_URL}/api/contacts`);
+      if (!response.ok) throw new Error();
       const data = await response.json();
       setContacts(data);
-    } catch (error) {
-      console.error('Error fetching contacts:', error);
+    } catch {
+      setContacts([]);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this contact?')) {
-      try {
-        const response = await fetch(`https://real-estate-backend-y094.onrender.com/api/contacts/${id}`, {
-          method: 'DELETE'
-        });
+    if (!window.confirm("Are you sure you want to delete this contact?")) return;
 
-        if (response.ok) {
-          alert('Contact deleted successfully!');
-          fetchContacts();
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to delete contact');
-      }
+    try {
+      const response = await fetch(`${BASE_URL}/api/contacts/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error();
+
+      alert("Contact deleted successfully!");
+      fetchContacts();
+    } catch {
+      alert("Failed to delete contact");
     }
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -86,8 +87,15 @@ function ViewContacts() {
               ))}
             </tbody>
           </table>
+
           {contacts.length === 0 && (
-            <p style={{ textAlign: 'center', padding: '20px', color: 'var(--text-light)' }}>
+            <p
+              style={{
+                textAlign: "center",
+                padding: "20px",
+                color: "var(--text-light)",
+              }}
+            >
               No contact submissions yet.
             </p>
           )}
@@ -98,3 +106,4 @@ function ViewContacts() {
 }
 
 export default ViewContacts;
+
