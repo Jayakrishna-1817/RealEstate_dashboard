@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { BASE_URL } from "../../config";
 
 function Dashboard() {
   const [stats, setStats] = useState({
     projects: 0,
     clients: 0,
     contacts: 0,
-    subscriptions: 0
+    subscriptions: 0,
   });
 
   useEffect(() => {
@@ -14,21 +15,34 @@ function Dashboard() {
 
   const fetchStats = async () => {
     try {
-      const [projects, clients, contacts, subscriptions] = await Promise.all([
-        fetch('/api/projects').then(res => res.json()),
-        fetch('/api/clients').then(res => res.json()),
-        fetch('/api/contacts').then(res => res.json()),
-        fetch('/api/newsletter').then(res => res.json())
+      const responses = await Promise.all([
+        fetch(`${BASE_URL}/api/projects`),
+        fetch(`${BASE_URL}/api/clients`),
+        fetch(`${BASE_URL}/api/contacts`),
+        fetch(`${BASE_URL}/api/newsletter`),
       ]);
 
+      for (const res of responses) {
+        if (!res.ok) throw new Error();
+      }
+
+      const [projects, clients, contacts, subscriptions] = await Promise.all(
+        responses.map((res) => res.json())
+      );
+
       setStats({
-        projects: projects.length,
-        clients: clients.length,
-        contacts: contacts.length,
-        subscriptions: subscriptions.length
+        projects: projects.length || 0,
+        clients: clients.length || 0,
+        contacts: contacts.length || 0,
+        subscriptions: subscriptions.length || 0,
       });
-    } catch (error) {
-      console.error('Error fetching stats:', error);
+    } catch {
+      setStats({
+        projects: 0,
+        clients: 0,
+        contacts: 0,
+        subscriptions: 0,
+      });
     }
   };
 
@@ -60,9 +74,10 @@ function Dashboard() {
 
       <div className="card">
         <h2>Quick Overview</h2>
-        <p style={{ color: 'var(--text-light)', lineHeight: '1.6' }}>
-          Use the sidebar navigation to manage your projects, clients, view contact form submissions,
-          and track newsletter subscriptions. All data is synchronized with your MongoDB database.
+        <p style={{ color: "var(--text-light)", lineHeight: "1.6" }}>
+          Use the sidebar navigation to manage your projects, clients, view contact
+          form submissions, and track newsletter subscriptions. All data is
+          synchronized with your MongoDB database.
         </p>
       </div>
     </div>
