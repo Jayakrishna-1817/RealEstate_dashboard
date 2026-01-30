@@ -20,7 +20,7 @@ function ViewContacts() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this contact?')) {
       try {
-        const response = await fetch(`/api/contacts/${id}`, {
+        const response = await fetch(`https://real-estate-backend-y094.onrender.com/api/contacts/${id}`, {
           method: 'DELETE'
         });
 

@@ -50,7 +50,7 @@ function ManageProjects() {
       formDataToSend.append('description', formData.description);
       formDataToSend.append('image', imageFile);
 
-      const response = await fetch('/api/projects', {
+      const response = await fetch('https://real-estate-backend-y094.onrender.com/api/projects', {
         method: 'POST',
         body: formDataToSend
       });
@@ -71,7 +71,7 @@ function ManageProjects() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
-        const response = await fetch(`/api/projects/${id}`, {
+        const response = await fetch(`https://real-estate-backend-y094.onrender.com/api/projects/${id}`, {
           method: 'DELETE'
         });
 

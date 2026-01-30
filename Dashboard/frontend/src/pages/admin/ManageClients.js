@@ -52,7 +52,7 @@ function ManageClients() {
       formDataToSend.append('designation', formData.designation);
       formDataToSend.append('image', imageFile);
 
-      const response = await fetch('/api/clients', {
+      const response = await fetch('https://real-estate-backend-y094.onrender.com/api/clients', {
         method: 'POST',
         body: formDataToSend
       });

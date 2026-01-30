@@ -10,7 +10,7 @@ function Clients() {
 
   const fetchClients = async () => {
     try {
-      const response = await fetch('/api/clients');
+      const response = await fetch('https://real-estate-backend-y094.onrender.com/api/clients');
       const data = await response.json();
       setClients(data);
     } catch (error) {
