@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import ImageCropper from '../../components/ImageCropper';
+import React, { useState, useEffect } from "react";
+import ImageCropper from "../../components/ImageCropper";
+import { BASE_URL } from "../../config";
 
 function ManageClients() {
   const [clients, setClients] = useState([]);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    designation: ''
+    name: "",
+    description: "",
+    designation: "",
   });
   const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
+  const [imagePreview, setImagePreview] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchClients();
@@ -17,74 +19,75 @@ function ManageClients() {
 
   const fetchClients = async () => {
     try {
-      const response = await fetch('/api/clients');
+      const response = await fetch(`${BASE_URL}/api/clients`);
+      if (!response.ok) throw new Error();
       const data = await response.json();
       setClients(data);
-    } catch (error) {
-      console.error('Error fetching clients:', error);
+    } catch {
+      setClients([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleImageCropped = (croppedBlob, fileName) => {
-    setImageFile(new File([croppedBlob], fileName, { type: 'image/jpeg' }));
+    setImageFile(new File([croppedBlob], fileName, { type: "image/jpeg" }));
     setImagePreview(URL.createObjectURL(croppedBlob));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!imageFile) {
-      alert('Please upload and crop an image');
+      alert("Please upload and crop an image");
       return;
     }
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('description', formData.description);
-      formDataToSend.append('designation', formData.designation);
-      formDataToSend.append('image', imageFile);
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("description", formData.description);
+      formDataToSend.append("designation", formData.designation);
+      formDataToSend.append("image", imageFile);
 
-      const response = await fetch('https://real-estate-backend-y094.onrender.com/api/clients', {
-        method: 'POST',
-        body: formDataToSend
+      const response = await fetch(`${BASE_URL}/api/clients`, {
+        method: "POST",
+        body: formDataToSend,
       });
 
-      if (response.ok) {
-        alert('Client added successfully!');
-        setFormData({ name: '', description: '', designation: '' });
-        setImageFile(null);
-        setImagePreview('');
-        fetchClients();
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to add client');
+      if (!response.ok) throw new Error();
+
+      alert("Client added successfully!");
+      setFormData({ name: "", description: "", designation: "" });
+      setImageFile(null);
+      setImagePreview("");
+      fetchClients();
+    } catch {
+      alert("Failed to add client");
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this client?')) {
-      try {
-        const response = await fetch(`/api/clients/${id}`, {
-          method: 'DELETE'
-        });
+    if (!window.confirm("Are you sure you want to delete this client?")) return;
 
-        if (response.ok) {
-          alert('Client deleted successfully!');
-          fetchClients();
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to delete client');
-      }
+    try {
+      const response = await fetch(`${BASE_URL}/api/clients/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error();
+
+      alert("Client deleted successfully!");
+      fetchClients();
+    } catch {
+      alert("Failed to delete client");
     }
   };
 
@@ -97,6 +100,7 @@ function ManageClients() {
 
       <div className="card">
         <h2>Add New Client</h2>
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Client Name</label>
@@ -105,18 +109,16 @@ function ManageClients() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter client name"
               required
             />
           </div>
 
           <div className="form-group">
-            <label>Testimonial/Description</label>
+            <label>Testimonial / Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Enter client testimonial"
               required
             />
           </div>
@@ -128,59 +130,78 @@ function ManageClients() {
               name="designation"
               value={formData.designation}
               onChange={handleChange}
-              placeholder="e.g., CEO, Foreclosure"
               required
             />
           </div>
 
-          <ImageCropper onCropComplete={handleImageCropped} aspectRatio={450 / 350} />
+          <ImageCropper
+            onCropComplete={handleImageCropped}
+            aspectRatio={450 / 350}
+          />
 
           {imagePreview && (
             <div className="image-preview">
               <img src={imagePreview} alt="Preview" />
-              <p>Image ready to upload (450 x 350 px)</p>
             </div>
           )}
 
-          <button type="submit" className="btn btn-primary">Add Client</button>
+          <button type="submit" className="btn btn-primary">
+            Add Client
+          </button>
         </form>
       </div>
 
       <div className="card">
         <h2>All Clients</h2>
-        <div className="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Designation</th>
-                <th>Description</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {clients.map((client) => (
-                <tr key={client._id}>
-                  <td>
-                    <img src={client.image} alt={client.name} className="item-image" style={{ borderRadius: '50%' }} />
-                  </td>
-                  <td>{client.name}</td>
-                  <td>{client.designation}</td>
-                  <td>{client.description.substring(0, 80)}...</td>
-                  <td>
-                    <button
-                      onClick={() => handleDelete(client._id)}
-                      className="btn btn-danger"
-                    >
-                      Delete
-                    </button>
-                  </td>
+
+        {loading ? (
+          <p>Loading clients...</p>
+        ) : clients.length === 0 ? (
+          <p>No clients found</p>
+        ) : (
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Designation</th>
+                  <th>Description</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {clients.map((client) => (
+                  <tr key={client._id}>
+                    <td>
+                      {client.image ? (
+                        <img
+                          src={`${BASE_URL}/${client.image}`}
+                          alt={client.name}
+                          className="item-image"
+                          style={{ borderRadius: "50%" }}
+                        />
+                      ) : (
+                        "No Image"
+                      )}
+                    </td>
+                    <td>{client.name}</td>
+                    <td>{client.designation}</td>
+                    <td>{client.description.substring(0, 80)}...</td>
+                    <td>
+                      <button
+                        onClick={() => handleDelete(client._id)}
+                        className="btn btn-danger"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
