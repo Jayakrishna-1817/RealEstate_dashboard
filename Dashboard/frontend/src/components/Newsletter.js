@@ -8,30 +8,40 @@ function Newsletter() {
     backgroundImage: `linear-gradient(rgba(26, 26, 46, 0.5), rgba(22, 33, 62, 0.5)), url(${process.env.PUBLIC_URL}/assets/images/Rectangle.svg)`
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
+  const handleSubscribe = async (e) => {
+  e.preventDefault();
+
+  if (!email) {
+    alert("Please enter your email");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "https://real-estate-backend-y094.onrender.com/api/newsletter",
+      {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email })
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        alert('Subscribed successfully!');
-        setEmail('');
-      } else {
-        alert(data.message);
+        body: JSON.stringify({ email }),
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to subscribe');
+    );
+
+    if (!response.ok) {
+      throw new Error("Request failed");
     }
-  };
+
+    const text = await response.text();
+
+    alert("Subscribed successfully!");
+    setEmail("");
+  } catch (error) {
+    console.error(error);
+    alert("Subscription failed");
+  }
+};
+
 
   return (
     <section className="newsletter section" style={newsletterStyle}>
