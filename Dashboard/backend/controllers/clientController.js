@@ -13,6 +13,10 @@ exports.createClient = async (req, res) => {
   try {
     const { name, description, designation } = req.body;
 
+    if (!name || !description || !designation) {
+      return res.status(400).json({ message: "All fields required" });
+    }
+
     if (!req.file) {
       return res.status(400).json({ message: "Image is required" });
     }
@@ -21,14 +25,14 @@ exports.createClient = async (req, res) => {
       name,
       description,
       designation,
-      image: `/uploads/clients/${req.file.filename}`,
+      image: `/uploads/${req.file.filename}`,
     });
 
-    const savedClient = await client.save();
-    res.status(201).json(savedClient);
+    const saved = await client.save();
+    res.status(201).json(saved);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
+    console.error("CREATE CLIENT ERROR:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 
